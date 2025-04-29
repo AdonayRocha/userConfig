@@ -22,10 +22,6 @@ public class userBasic {
     @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres")
     private String nome;
 
-    @NotNull(message = "O email não pode ser nulo")
-    @NotEmpty(message = "O email não pode ser vazio")
-    private String email;
-
     @NotNull(message = "O CPF não pode ser nulo")
     @NotEmpty(message = "O CPF não pode ser vazio")
     @Size(min = 11, max = 11, message = "O CPF deve ter 11 caracteres")
