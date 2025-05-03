@@ -35,7 +35,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "USERS")
 
-public class userBasic implements UserDetails {
+public class UserBasic implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
@@ -59,10 +59,8 @@ public class userBasic implements UserDetails {
     @NotEmpty(message = "A senha não pode ser vazia")
     private String senha;
 
-    // TODO Fazer role, como enum
-    // Role
-    @Pattern(regexp = "ROLE_USER|ROLE_ADMIN")
-    private String role;
+    @NotNull(message = "A função não pode ser nula")
+    private RoleUser role;
 
     // Endereço Residencial
     @NotNull(message = "O número da residência não pode ser nulo")
@@ -82,35 +80,36 @@ public class userBasic implements UserDetails {
     @Autowired
     private EnderecoService enderecoService;
 
-    public void preencherEndereco(userBasic usuario) {
-        if (usuario.getCep() != null && !usuario.getCep().isEmpty()) {
-            EnderecoCep endereco = enderecoService.buscaEnderecoCep(usuario.getCep());
-            if (endereco != null) {
-                String logradouro = endereco.getLogradouro();
-                String localidade = endereco.getLocalidade();
+    public void preencherEndereco() {
+    if (this.cep != null && !this.cep.isEmpty()) {
+        EnderecoCep endereco = enderecoService.buscaEnderecoCep(this.cep); // Passa apenas o CEP como String
+        if (endereco != null) {
+            String logradouro = endereco.getLogradouro();
+            String localidade = endereco.getLocalidade();
 
-                // Verifica se logradouro ou localidade são nulos ou vazios
-                if (logradouro == null || logradouro.isEmpty() || localidade == null || localidade.isEmpty()) {
-                    throw new IllegalArgumentException(
-                            "Erro ao preencher endereço: Rua ou cidade não encontrados para o CEP informado.");
-                }
-
-                usuario.setRua(logradouro);
-                usuario.setCidade(localidade);
-            } else {
+            // Verifica se logradouro ou localidade são nulos ou vazios
+            if (logradouro == null || logradouro.isEmpty() || localidade == null || localidade.isEmpty()) {
                 throw new IllegalArgumentException(
-                        "Erro ao preencher endereço: Nenhum endereço encontrado para o CEP informado.");
+                        "Erro ao preencher endereço: Rua ou cidade não encontrados para o CEP informado.");
             }
+
+            this.setRua(logradouro);
+            this.setCidade(localidade);
+        } else {
+            throw new IllegalArgumentException(
+                    "Erro ao preencher endereço: Nenhum endereço encontrado para o CEP informado.");
         }
     }
+}
 
     // Métodos
 
     // Métodos Authentication
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
+    
 
     @Override
     public String getPassword() {

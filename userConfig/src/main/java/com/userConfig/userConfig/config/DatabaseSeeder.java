@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.userConfig.userConfig.model.userBasic;
-import com.userConfig.userConfig.repository.userBasicRepository;
+import com.userConfig.userConfig.model.RoleUser;
+import com.userConfig.userConfig.model.UserBasic;
+import com.userConfig.userConfig.repository.UserBasicRepository;
 import com.userConfig.userConfig.service.EnderecoService;
 
 import lombok.RequiredArgsConstructor;
@@ -15,35 +16,35 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DatabaseSeeder implements CommandLineRunner {
 
-    private final userBasicRepository userRepository;
+    private final UserBasicRepository userRepository;
     private final EnderecoService enderecoService;
 
     @Override
     public void run(String... args) throws Exception {
 
         if (userRepository.count() == 0) {
-            List<userBasic> usuarios = List.of(
-                    userBasic.builder()
+            List<UserBasic> usuarios = List.of(
+                    UserBasic.builder()
                             .nome("João Silva")
                             .cpf("12345678901")
                             .email("joao.silva@example.com")
                             .senha("Senha@123")
-                            .role("ROLE_USER")
+                            .role(RoleUser.USER)
                             .numeroResidencial("123")
                             .cep("01001000") 
                             .build(),
 
-                    userBasic.builder()
+                    UserBasic.builder()
                             .nome("Maria Oliveira")
                             .cpf("98765432100")
                             .email("maria.oliveira@example.com")
                             .senha("Senha@123")
-                            .role("ROLE_ADMIN")
+                            .role(RoleUser.USER)
                             .numeroResidencial("456")
                             .cep("04003010")
                             .build());
 
-            for (userBasic usuario : usuarios) {
+            for (UserBasic usuario : usuarios) {
                 usuario.setEnderecoService(enderecoService); 
                 usuario.preencherEndereco(usuario); 
                 usuario.formatarCep();
