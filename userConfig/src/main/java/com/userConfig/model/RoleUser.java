@@ -3,30 +3,41 @@ package com.userConfig.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/** 
- *  Displayname for the friendly name of the role on the UI.
- *  The displayname is habilited used in the jSon
- *  The value name is habilited used in the jSon
- */
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
+/**
+ * Enumeração para representar os papéis de usuário no sistema.
+ * Inclui suporte para serialização/desserialização com Jackson.
+ */
 public enum RoleUser {
     ADMIN("Administrator"),
     USER("Regular User"),
     USER_GROUP("User Group"),
     ADMIN_GROUP("Administrator Group");
 
-    // Immutable field
+    // Campo imutável para o nome amigável do papel
     private final String displayName;
 
     RoleUser(String displayName) {
         this.displayName = displayName;
     }
 
+    /**
+     * Retorna o nome amigável do papel para serialização JSON.
+     */
     @JsonValue
     public String getDisplayName() {
         return displayName;
     }
 
+    /**
+     * Converte um valor JSON em uma instância de RoleUser.
+     * 
+     * @param value O valor JSON a ser convertido.
+     * @return A instância correspondente de RoleUser.
+     * @throws IllegalArgumentException Se o valor não corresponder a nenhum papel.
+     */
     @JsonCreator
     public static RoleUser fromDisplayName(String value) {
         for (RoleUser role : RoleUser.values()) {
@@ -34,6 +45,6 @@ public enum RoleUser {
                 return role;
             }
         }
-        throw new IllegalArgumentException("Função inválidas: " + value);
+        throw new IllegalArgumentException("Função inválida: " + value);
     }
 }

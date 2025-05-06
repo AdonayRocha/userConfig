@@ -3,11 +3,13 @@ package com.userConfig.model;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -56,6 +58,7 @@ public class UserBasic implements UserDetails {
     @NotEmpty(message = "A senha não pode ser vazia")
     private String senha;
 
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "A função não pode ser nula")
     private RoleUser role;
 
