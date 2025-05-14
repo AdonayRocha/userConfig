@@ -15,7 +15,7 @@ import com.userConfig.model.UserBasic;
 @Service
 public class TokenService {
 
-    private Instant expiresAt = LocalDateTime.now().plusDays(1).toInstant(ZoneOffset.ofHours(-3));
+    private Instant expiresAt = LocalDateTime.now().plusHours(8).toInstant(ZoneOffset.ofHours(-3));
     private Algorithm algorithm = Algorithm.HMAC256("secret");
 
     public Token createToken(UserBasic user){

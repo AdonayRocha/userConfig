@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.userConfig.repository.UserBasicRepository;
 
-import com.userConfig.repository.UserBasicRepository;
-
 @Service
 public class AuthService implements UserDetailsService {
 
