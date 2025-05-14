@@ -8,17 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.userConfig.repository.UserBasicRepository;
 
+import com.userConfig.repository.UserBasicRepository;
+
 @Service
 public class AuthService implements UserDetailsService {
 
     @Autowired
-    private UserBasicRepository userRepository;
+    private UserBasicRepository repository;
 
-    // UserDetails - Spring
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+        return repository.findByEmail(username).orElseThrow(
+            () -> new UsernameNotFoundException("usuário não encontrado")
+        );
     }
-
+    
 }

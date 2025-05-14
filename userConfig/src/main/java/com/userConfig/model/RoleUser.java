@@ -3,11 +3,7 @@ package com.userConfig.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-
 /**
- * Enumeração para representar os papéis de usuário no sistema.
  * Inclui suporte para serialização/desserialização com Jackson.
  */
 public enum RoleUser {
