@@ -3,16 +3,13 @@ package com.userConfig.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-/**
- * Inclui suporte para serialização/desserialização com Jackson.
- */
 public enum RoleUser {
     ADMIN("Administrator"),
     USER("Regular User"),
     USER_GROUP("User Group"),
     ADMIN_GROUP("Administrator Group");
 
-    // Campo imutável para o nome amigável do papel
+    // Campo imutável 
     private final String displayName;
 
     RoleUser(String displayName) {
@@ -20,7 +17,7 @@ public enum RoleUser {
     }
 
     /**
-     * Retorna o nome amigável do papel para serialização JSON.
+     * Nomme amigável 
      */
     @JsonValue
     public String getDisplayName() {
@@ -28,11 +25,9 @@ public enum RoleUser {
     }
 
     /**
-     * Converte um valor JSON em uma instância de RoleUser.
-     * 
-     * @param value O valor JSON a ser convertido.
-     * @return A instância correspondente de RoleUser.
-     * @throws IllegalArgumentException Se o valor não corresponder a nenhum papel.
+     * @param value 
+     * @return
+     * @throws IllegalArgumentException 
      */
     @JsonCreator
     public static RoleUser fromDisplayName(String value) {
